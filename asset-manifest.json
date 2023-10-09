@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/test/static/css/main.caea3d15.css",
+    "main.js": "/test/static/js/main.edf21164.js",
+    "index.html": "/test/index.html",
+    "main.caea3d15.css.map": "/test/static/css/main.caea3d15.css.map",
+    "main.edf21164.js.map": "/test/static/js/main.edf21164.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.caea3d15.css",
+    "static/js/main.edf21164.js"
+  ]
+}
