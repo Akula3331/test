@@ -1,0 +1,79 @@
+import React, { useEffect, useState } from "react";
+import cls from "./TimeCon.module.scss";
+import BlockTime from "../BlockTime/BlockTime";
+
+
+
+export default function TimeCon({ onFirstDateFromChild }) {
+  const initialData = [
+    { img: "", 
+    dis: "Покер", 
+    data: "12.10.2023",
+    },
+  
+    { img: '', dis: "UNO", data: "15.10.2023" },
+    { img: "/icons/dice.svg", dis: "Шашки", data: "18.10.2023",
+    pNum:['Gorbatic', 'Betito','CFKN','Kalamburger'] },
+  ];
+
+  // 'Gorbatic', 'Betito','CFKN','Kalamburger' Никнеймы
+
+  const [firstData] = useState(
+    initialData.length > 0 ? initialData[0].data : null
+  );
+
+  // const targetDate = null;
+  useEffect(() => {
+    onFirstDateFromChild(firstData);
+  }, [firstData, onFirstDateFromChild]);
+  const [containerStates, setContainerStates] = useState(
+    initialData.map(() => false) // Изначально все контейнеры закрыты
+  );
+  const handleContainerClick = (index) => {
+    // Создаем копию массива состояний
+    const newContainerStates = [...containerStates];
+
+    // Если выбранный контейнер уже открыт, закрываем его, иначе открываем
+    newContainerStates[index] = !newContainerStates[index];
+
+    // Если открываем выбранный контейнер, закрываем другие
+    if (newContainerStates[index]) {
+      newContainerStates.forEach((state, i) => {
+        if (i !== index) {
+          newContainerStates[i] = false;
+        }
+      });
+    }
+
+    setContainerStates(newContainerStates);
+  };
+  const bgStyles ={
+    background:'url(/images/datebg.jpg)',
+    backgroundPosition: 'center center', // Картинка будет выровнена по центру горизонтально и вертикально
+    backgroundSize: 'cover',
+  }
+  return (
+    <div>
+      <div className={cls.header}>
+        <p className={cls.headerItem}>Тип</p>
+        <p className={cls.headerItem}>Дисциплина</p>
+        <p className={cls.headerItem}>Дата</p>
+      </div>
+      <div className={cls.con} style={bgStyles}>
+        <img className={cls.bg} src="/images/datebg.jpg" alt="" />
+        {initialData.map((item, index) => (
+          <BlockTime
+            key={index}
+            img={item.img}
+            dis={item.dis}
+            data={item.data}
+            isOpen={containerStates[index]}
+            onToggle={() => handleContainerClick(index)}
+            pNum={item.pNum}
+          />
+        ))}
+      </div>
+
+    </div>
+  );
+}
